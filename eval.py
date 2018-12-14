@@ -60,11 +60,12 @@ print("\nEvaluating...\n")
 # ==================================================
 checkpoint_file = tf.train.latest_checkpoint(FLAGS.checkpoint_dir)
 graph = tf.Graph()
-with tf.device('/device:GPU:2'):
+with tf.device('/device:GPU:0'):
     with graph.as_default():
         session_conf = tf.ConfigProto(
             allow_soft_placement=FLAGS.allow_soft_placement,
             log_device_placement=FLAGS.log_device_placement)
+        session_conf.gpu_options.allow_growth = True
         sess = tf.Session(config=session_conf)
         with sess.as_default():
             # Load the saved meta graph and restore variables
